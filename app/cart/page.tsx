@@ -52,7 +52,7 @@ display: flex;
 gap: 5px;
 `
 export default function CartPage() {
-    const { cartProducts, addProducts, removeProducts } = useContext(CartContext);
+    const { cartProducts, addProducts, removeProducts, clearCart } = useContext(CartContext);
     const [products, setProducts] = useState([]);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -69,6 +69,9 @@ export default function CartPage() {
         if (!cartProducts?.length) {
           setProducts([]);
           return;
+        }
+        if(success){
+          clearCart();
         }
   
         const res = await fetch("/api/cart", {
@@ -175,11 +178,11 @@ export default function CartPage() {
                         {product.title} 
                       </ProductInfoCell>
                       <td>
-                      <Button onClick={()=>lessOfThisProduct(product._id)}>-</Button>
+                      <Button outline onClick={()=>lessOfThisProduct(product._id)}>-</Button>
                       <QuantityLabel>
                       {getQuantity(product._id)}
                       </QuantityLabel> 
-                      <Button onClick={()=>moreOfThisProduct(product._id)}>+</Button>
+                      <Button primary onClick={()=>moreOfThisProduct(product._id)}>+</Button>
                       </td>
                       <td>
                      

@@ -108,8 +108,8 @@ export async function POST(req: Request) {
       mode: "payment",
       customer_email: email,
 
-      success_url: `${process.env.NEXT_PUBLIC_URL}/cart?success=1`,
-      cancel_url: `${process.env.NEXT_PUBLIC_URL}/cart`,
+      success_url: `${process.env.NEXT_PUBLIC_URL}/checkout/success`,
+      cancel_url: `${process.env.NEXT_PUBLIC_URL}/checkout/cancel`,
       metadata: {
         orderId: orderId,   
       }
