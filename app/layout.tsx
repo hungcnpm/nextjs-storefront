@@ -1,6 +1,7 @@
 
 import { createGlobalStyle } from "styled-components";
 import { CartContextProvider } from "@/components/cartContext";
+import Footer from "@/components/Footer";
 const GlobalStyles = createGlobalStyle`
  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         <GlobalStyles />
         <CartContextProvider>
          {children}
+         <Footer/>
         </CartContextProvider>
       </body>
     </html>

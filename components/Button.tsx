@@ -3,6 +3,7 @@
 import styled, { css } from "styled-components";
 import React from "react";
 import { primaryColor } from "@/lib/color";
+
 type ButtonProps = {
   primary?: boolean;
   size?: "l" | "m";
