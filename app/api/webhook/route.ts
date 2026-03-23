@@ -42,6 +42,7 @@ export async function POST(req: Request) {
           $set: {
             status: "paid",
             paidAt: new Date(),
+            paid: true,
           },
         }
       );
