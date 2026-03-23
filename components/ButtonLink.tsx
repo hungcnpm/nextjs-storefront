@@ -30,7 +30,7 @@ export default function ButtonLink({
   children,
   primary,
   size,
-  white,
+  white,  
   outline,
   block,
   ...rest

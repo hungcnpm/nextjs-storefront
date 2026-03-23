@@ -59,7 +59,7 @@ export default function ProductBox({
   images,
 }: ProductBoxProps) {
   const url = '/products/'+_id;
-  const {addProducts} = useContext(CartContext);
+  const { addProduct } = useContext(CartContext);
   return (
     
     <ProductWrapper>
@@ -77,7 +77,7 @@ export default function ProductBox({
         </Price>
         </div>
         <div>
-        <Button onClick={()=> addProducts(_id)} primary outline>Add to card</Button>
+        <Button onClick={()=> addProduct(_id)} primary outline>Add to card</Button>
         </div>
         </PriceRow>
       </ProductInfoBox>

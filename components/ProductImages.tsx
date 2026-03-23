@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { useState } from "react";
 
 type ImageButtonProps = {
-    active?: boolean;
+    $active?: boolean;
   };
 const Image = styled.img`
 max-width: 100%;
@@ -26,14 +26,14 @@ const ImageButton = styled.div<ImageButtonProps>`
     padding: 2px;
     cursor: pointer;
     border-radius: 5px;
-     ${(props) =>
-    !props.active &&
+    ${({ $active })  =>
+    !$active &&
     css`
       background-color: transparent;
       opacity: 0.5;
     `}
-     ${(props) =>
-    props.active &&
+    ${({ $active }) =>
+      $active &&
     css`
       background-color: red;
     `}
@@ -52,7 +52,7 @@ export default function ProductImages({
         <ImageButtons >  
           {images.map((image, index) => (
             <ImageButton 
-            active={image===activeImage} 
+            $active={image===activeImage} 
             key={index} onClick={() => 
             setActiveImage(image)}> 
               <Image src={image} alt="/"/>
