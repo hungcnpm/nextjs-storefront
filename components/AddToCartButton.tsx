@@ -4,10 +4,12 @@ import { CartContext } from "@/components/cartContext";
 import Button from "./Button";
 
 export default function AddToCartButton({ product }: any) {
-  const { addProducts } = useContext(CartContext);
+  const { addProduct } = useContext(CartContext);
 
   return (
-    <Button primary onClick={() => addProducts(product._id)}>
+    <Button primary onClick={() => 
+      addProduct(product._id)
+    }>
       Add to cart
     </Button>
   );

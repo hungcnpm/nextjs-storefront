@@ -2,62 +2,71 @@
 
 import { createContext, useEffect, useState, ReactNode } from "react";
 
+type CartItem = {
+  productId: string;
+  quantity: number;
+};
+
 type CartContextType = {
-  cartProducts: string[];
-  setCartProducts: React.Dispatch<React.SetStateAction<string[]>>;
-  addProducts: (productId: string) => void;
-  removeProducts: (productId: string) => void;
+  cartItems: CartItem[];
+  addProduct: (productId: string) => void;
+  removeProduct: (productId: string) => void;
   clearCart: () => void;
+  fetchCart: () => void;
 };
 
 export const CartContext = createContext<CartContextType>({
-  cartProducts: [],
-  setCartProducts: () => {},
-  addProducts: () => {},
-  removeProducts: () => {},
+  cartItems: [],
+  addProduct: () => {},
+  removeProduct: () => {},
   clearCart: () => {},
-
+  fetchCart: () => {},
 });
 
 export function CartContextProvider({ children }: { children: ReactNode }) {
-  const [cartProducts, setCartProducts] = useState<string[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  // 👉 lưu vào localStorage khi cart thay đổi
-  useEffect(() => {
-    if (cartProducts.length > 0) {
-      localStorage.setItem("cart", JSON.stringify(cartProducts));
-    }
-  }, [cartProducts]);
+  // ✅ fetch cart từ server
+  async function fetchCart() {
+    const res = await fetch("/api/cart");
+    const data = await res.json();
+    setCartItems(data.items || []);
+  }
 
-  // 👉 load cart từ localStorage khi mount
   useEffect(() => {
-    const storedCart = localStorage.getItem("cart");
-    if (storedCart) {
-      setCartProducts(JSON.parse(storedCart));
-    } 
+    fetchCart();
   }, []);
 
-  function addProducts(productId: string) {
-    setCartProducts((prev) => [...prev, productId]);
-  }
-  function removeProducts(productId: string) {
-    setCartProducts((prev) => {
-      const index = prev.indexOf(productId);
-      if (index > -1) {
-        const newCart = [...prev];
-        newCart.splice(index, 1);
-        return newCart;
-      }
-    
-      return prev;
+  // ✅ add product
+  async function addProduct(productId: string) {
+    await fetch("/api/cart", {
+      method: "POST",
+      body: JSON.stringify({ productId }),
     });
+    fetchCart();
   }
-  function clearCart() {
-    setCartProducts([]);
-    localStorage.removeItem("cart");
+
+  // ✅ remove 1 quantity
+  async function removeProduct(productId: string) {
+    await fetch("/api/cart", {
+      method: "PUT",
+      body: JSON.stringify({ productId }),
+    });
+    fetchCart();
   }
+
+  // ✅ clear cart
+  async function clearCart() {
+    await fetch("/api/cart", {
+      method: "DELETE",
+    });
+    setCartItems([]);
+  }
+
   return (
-    <CartContext.Provider value={{ cartProducts, setCartProducts, addProducts, removeProducts, clearCart }}>
+    <CartContext.Provider
+      value={{ cartItems, addProduct, removeProduct, clearCart, fetchCart }}
+    >
       {children}
     </CartContext.Provider>
   );
