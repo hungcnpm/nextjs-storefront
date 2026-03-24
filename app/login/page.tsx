@@ -5,6 +5,8 @@ import { signIn } from "next-auth/react";
 import styled from "styled-components";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -83,7 +85,9 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
-
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
   async function handleLogin(e: any) {
     e.preventDefault();
 
@@ -97,7 +101,7 @@ export default function LoginPage() {
       toast.error(res.error);
     } else {
       toast.success("Welcome back!");
-      window.location.href = "/";
+      router.push(callbackUrl);
     }
   }
 

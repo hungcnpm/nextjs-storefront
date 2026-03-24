@@ -59,6 +59,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
+    const [gender, setGender] = useState("");
   const handleRegister = async () => {
     const res = await fetch("/api/register", {
       method: "POST",
@@ -67,6 +68,7 @@ export default function RegisterPage() {
         name,
         email,
         password,
+        gender,
       }),
     });
   
