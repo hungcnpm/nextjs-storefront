@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import styled from "styled-components";
 import Headers from "@/components/header";
-import { useRouter } from "next/navigation";
 
 const Wrapper = styled.div`
   max-width: 800px;
@@ -26,12 +25,8 @@ const Item = styled.div`
 export default function OrdersPage() {
   const { data: session, status } = useSession();
   const [orders, setOrders] = useState<any[]>([]);
-  const router=useRouter();
 
   useEffect(() => {
-    if (!session) {
-      router.push("/login");
-    }
     fetch("/api/orders")
       .then(res => res.json())
       .then(data => setOrders(data));
@@ -43,7 +38,6 @@ export default function OrdersPage() {
 
   return (
     <>
-    <Headers />
     <Wrapper>
       <h1>Your Orders</h1>
 

@@ -4,12 +4,13 @@ import styled from "styled-components";
 import Center from "@/components/Center";
 import Header from "@/components/header";
 import Button from "@/components/Button";
-import { useContext, useEffect, useState } from "react";
+import { use, useContext, useEffect, useState } from "react";
 import { CartContext } from "@/components/cartContext";
 import Table from "@/components/Table";
 import Input from "@/components/Input";
 import { useSearchParams } from "next/navigation";
-
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 const ColumnsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1.5fr 1fr;
@@ -64,9 +65,13 @@ export default function CartPage() {
 
   const searchParams = useSearchParams();
   const success = searchParams.get("success");
-
+  const router=useRouter();
+  const { data: session } = useSession();
   // 🔥 fetch product info theo cartItems
   useEffect(() => {
+    if (!session) {
+      router.push("/login");
+    }
     async function fetchProducts() {
       if (!cartItems.length) {
         setProducts([]);

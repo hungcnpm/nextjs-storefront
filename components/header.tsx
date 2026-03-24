@@ -87,8 +87,6 @@ return (
               <NavLink href="/">Home</NavLink>
               <NavLink href="/products">All products</NavLink>
               <NavLink href="/categories">Categories</NavLink>
-              <NavLink href="/orders">Orders</NavLink>
-
               {session ? (
                 <>
                   <CartWrapper
@@ -110,9 +108,9 @@ return (
                       <Avatar
                         src={session.user?.image || "/default_image.jpg"}
                       />
-                      <span>
+                      <NavLink href="/user">  
                         {session.user?.username || session.user?.name}
-                      </span>
+                      </NavLink>
                     </UserInfo>
 
                     {openUser && (
