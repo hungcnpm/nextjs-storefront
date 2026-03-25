@@ -116,12 +116,12 @@ return (
                     {openUser && (
                       <Dropdown>
                         <DropdownItem>
-                          <StyledLink href="/account">
+                          <StyledLink href="/user">
                             Tài khoản của tôi
                           </StyledLink>
                         </DropdownItem>
                         <DropdownItem>
-                          <StyledLink href="/orders">
+                          <StyledLink href="/user/orders">
                             Đơn mua
                           </StyledLink>
                         </DropdownItem>
